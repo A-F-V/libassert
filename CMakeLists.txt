@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.8...3.23)
 
 project(
-  libassert
+  assert
   VERSION 1.0.0
   LANGUAGES CXX
 )
@@ -21,8 +21,8 @@ add_library(assert src/assert.cpp)
 target_include_directories(
   assert
   PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/>
-  $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/assert/assert>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
 )
 
 target_compile_features(
@@ -90,20 +90,22 @@ if(NOT CMAKE_SKIP_INSTALL_RULES)
     TARGETS assert
     EXPORT assert_targets
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+    INCLUDES DESTINATION include
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
   )
 
-  install(
-    FILES
-    include/assert.hpp
-    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/assert/assert
-  )
-
+  
   install(
     FILES
     third_party/magic_enum.hpp
-    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/assert/third_party
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/third_party
+  )
+
+
+  install(
+    DIRECTORY
+    include/
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
   )
 
   export(
@@ -127,13 +129,13 @@ if(NOT CMAKE_SKIP_INSTALL_RULES)
     EXPORT assert_targets
     FILE assert_targets.cmake
     NAMESPACE assert::
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/assert
+    DESTINATION cmake
   )
 
   install(
     FILES
     ${CMAKE_CURRENT_BINARY_DIR}/assert/assert-config.cmake
     ${CMAKE_CURRENT_BINARY_DIR}/assert/assert-config-version.cmake
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/assert
+    DESTINATION cmake
   )
 endif()
