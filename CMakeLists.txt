@@ -94,14 +94,6 @@ if(NOT CMAKE_SKIP_INSTALL_RULES)
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
   )
 
-  
-  install(
-    FILES
-    third_party/magic_enum.hpp
-    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/third_party
-  )
-
-
   install(
     DIRECTORY
     include/
