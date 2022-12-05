@@ -16,19 +16,13 @@ set(ASSERT_FAIL "" CACHE STRING "ASSERT_FAIL")
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 include(GNUInstallDirs)
-
-add_library(magic_nums INTERFACE third_party/magic_enum.hpp)
-#target_include_directories(magic_nums INTERFACE)
 add_library(assert src/assert.cpp)
-
-#set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/install)
-target_link_libraries(assert PRIVATE magic_nums)
 
 target_include_directories(
   assert
   PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/>
-  $<INSTALL_INTERFACE:include>
+  $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/assert/assert>
 )
 
 target_compile_features(
@@ -93,34 +87,39 @@ if(NOT CMAKE_SKIP_INSTALL_RULES)
   include(CMakePackageConfigHelpers)
 
   install(
-    TARGETS assert magic_nums
+    TARGETS assert
     EXPORT assert_targets
-    LIBRARY DESTINATION lib
-    INCLUDES DESTINATION include
-    ARCHIVE DESTINATION lib
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
   )
 
   install(
     FILES
     include/assert.hpp
-    DESTINATION include
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/assert/assert
   )
 
+  install(
+    FILES
+    third_party/magic_enum.hpp
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/assert/third_party
+  )
 
   export(
     EXPORT assert_targets
-    FILE assert_targets.cmake
+    FILE ${CMAKE_CURRENT_BINARY_DIR}/assert/assert_targets.cmake
     NAMESPACE assert::
   )
 
   configure_package_config_file(
     cmake/assert-config.cmake.in
-    assert-config.cmake
-    INSTALL_DESTINATION lib/cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/assert/assert-config.cmake
+    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/assert
   )
 
   write_basic_package_version_file(
-    lib/cmake/assert-config-version.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/assert/assert-config-version.cmake
     COMPATIBILITY SameMajorVersion
   )
 
@@ -128,8 +127,13 @@ if(NOT CMAKE_SKIP_INSTALL_RULES)
     EXPORT assert_targets
     FILE assert_targets.cmake
     NAMESPACE assert::
-    DESTINATION lib/cmake
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/assert
   )
 
-  
+  install(
+    FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/assert/assert-config.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/assert/assert-config-version.cmake
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/assert
+  )
 endif()
