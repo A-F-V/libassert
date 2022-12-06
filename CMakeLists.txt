@@ -10,13 +10,20 @@ option(ASSERT_BUILD_TESTS "Enables tests" ON)
 option(ASSERT_DECOMPOSE_BINARY_LOGICAL "Enables expression decomposition of && and ||" OFF)
 option(ASSERT_LOWERCASE "Enables assert alias for ASSERT" OFF)
 option(ASSERT_USE_MAGIC_ENUM "Use the MagicEnum library to print better diagnostics for enum classes" ON)
-option(MACRO_PREFIX "Sets the prefix of macros" "")
 set(ASSERT_FAIL "" CACHE STRING "ASSERT_FAIL")
+
 
 # libassert uses relocs, -fpic has to be used to allow shared libs to link libassert as a static library.
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 include(GNUInstallDirs)
+
+# Set up prefix to assertion macros to avoid conflict
+if(NOT LIBASSERT_MACRO_PREFIX)
+set(LIBASSERT_MACRO_PREFIX "LIBASSERT_" CACHE STRING "Sets the prefix of macros")  
+endif()
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/include/config/assert.hpp.in ${CMAKE_CURRENT_SOURCE_DIR}/include/assert.hpp)
+
 add_library(assert STATIC src/assert.cpp)
 
 target_include_directories(
@@ -99,6 +106,8 @@ if(NOT CMAKE_SKIP_INSTALL_RULES)
     DIRECTORY
     include/
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+    PATTERN config EXCLUDE 
+    
   )
 
   export(

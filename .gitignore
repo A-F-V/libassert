@@ -10,3 +10,5 @@ CMakeUserPresets.json
 tests/cmake_client/build*
 tests/build*
 tests/install*
+
+include/assert.hpp
