@@ -1223,11 +1223,11 @@ using libassert::ASSERTION;
 #endif
 
 #ifndef NDEBUG
- #define ${LIBASSERT_MACRO_PREFIX}DEBUG_ASSERT(expr, ...) ASSERT_INVOKE(expr, false, true, "DEBUG_ASSERT", debug_assertion, , __VA_ARGS__)
- #define ${LIBASSERT_MACRO_PREFIX}ASSERT(expr, ...) ASSERT_INVOKE(expr, true, true, "ASSERT", assertion, , __VA_ARGS__)
+ #define ${LIBASSERT_MACRO_PREFIX}DEBUG_ASSERT(expr, ...) ASSERT_INVOKE(expr, false, true, "${LIBASSERT_MACRO_PREFIX}DEBUG_ASSERT", debug_assertion, , __VA_ARGS__)
+ #define ${LIBASSERT_MACRO_PREFIX}ASSERT(expr, ...) ASSERT_INVOKE(expr, true, true, "${LIBASSERT_MACRO_PREFIX}ASSERT", assertion, , __VA_ARGS__)
 #else
  #define ${LIBASSERT_MACRO_PREFIX}DEBUG_ASSERT(expr, ...) (void)0
- #define ${LIBASSERT_MACRO_PREFIX}ASSERT(expr, ...) ASSERT_INVOKE(expr, true, false, "ASSERT", assertion, , __VA_ARGS__)
+ #define ${LIBASSERT_MACRO_PREFIX}ASSERT(expr, ...) ASSERT_INVOKE(expr, true, false, "${LIBASSERT_MACRO_PREFIX}ASSERT", assertion, , __VA_ARGS__)
 #endif
 
 #ifdef ASSERT_LOWERCASE
@@ -1246,7 +1246,7 @@ using libassert::ASSERTION;
 #ifdef NO_ASSERT_RELEASE_EVAL
  #undef ${LIBASSERT_MACRO_PREFIX}ASSERT
  #ifndef NDEBUG
-  #define ${LIBASSERT_MACRO_PREFIX}ASSERT(expr, ...) ASSERT_INVOKE(expr, false, true, "ASSERT", assertion, , __VA_ARGS__)
+  #define ${LIBASSERT_MACRO_PREFIX}ASSERT(expr, ...) ASSERT_INVOKE(expr, false, true, "${LIBASSERT_MACRO_PREFIX}ASSERT", assertion, , __VA_ARGS__)
  #else
   #define ${LIBASSERT_MACRO_PREFIX}ASSERT(expr, ...) (void)0
  #endif
@@ -1260,9 +1260,9 @@ using libassert::ASSERTION;
  #endif
 #endif
 
-#define ${LIBASSERT_MACRO_PREFIX}ASSUME(expr, ...) ASSERT_INVOKE(expr, true, true, "ASSUME", assumption, LIBASSERT_ASSUME_ACTION, __VA_ARGS__)
+#define ${LIBASSERT_MACRO_PREFIX}ASSUME(expr, ...) ASSERT_INVOKE(expr, true, true, "${LIBASSERT_MACRO_PREFIX}ASSUME", assumption, LIBASSERT_ASSUME_ACTION, __VA_ARGS__)
 
-#define ${LIBASSERT_MACRO_PREFIX}VERIFY(expr, ...) ASSERT_INVOKE(expr, true, true, "VERIFY", verification, , __VA_ARGS__)
+#define ${LIBASSERT_MACRO_PREFIX}VERIFY(expr, ...) ASSERT_INVOKE(expr, true, true, "${LIBASSERT_MACRO_PREFIX}VERIFY", verification, , __VA_ARGS__)
 
 #ifndef LIBASSERT_IS_CPP // keep macros for the .cpp
  #undef LIBASSERT_IS_CLANG
