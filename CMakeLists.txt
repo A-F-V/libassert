@@ -56,7 +56,7 @@ target_compile_options(
 target_link_libraries(
   assert
   PRIVATE
-  $<$<CXX_COMPILER_ID:MSVC>:dbghelp>
+  $<$<PLATFORM_ID:Windows>:dbghelp>
   ${CMAKE_DL_LIBS}
 )
 
