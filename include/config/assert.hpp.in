@@ -981,7 +981,7 @@ namespace libassert::detail {
             raw_trace,
             sizeof_extra_diagnostics
         };
-        ::ASSERT_FAIL(params->type, fatal, printer);
+        ::${LIBASSERT_MACRO_PREFIX}ASSERT_FAIL(params->type, fatal, printer);
     }
 
     template<typename A, typename B, typename C, typename... Args>
