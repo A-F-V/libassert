@@ -16,7 +16,7 @@ set(ASSERT_FAIL "" CACHE STRING "ASSERT_FAIL")
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 include(GNUInstallDirs)
-add_library(assert src/assert.cpp)
+add_library(assert STATIC src/assert.cpp)
 
 target_include_directories(
   assert
