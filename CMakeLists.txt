@@ -6,10 +6,11 @@ project(
   LANGUAGES CXX
 )
 
-option(ASSERT_BUILD_TESTS "Enables tests" OFF)
+option(ASSERT_BUILD_TESTS "Enables tests" ON)
 option(ASSERT_DECOMPOSE_BINARY_LOGICAL "Enables expression decomposition of && and ||" OFF)
 option(ASSERT_LOWERCASE "Enables assert alias for ASSERT" OFF)
 option(ASSERT_USE_MAGIC_ENUM "Use the MagicEnum library to print better diagnostics for enum classes" ON)
+option(MACRO_PREFIX "Sets the prefix of macros" "")
 set(ASSERT_FAIL "" CACHE STRING "ASSERT_FAIL")
 
 # libassert uses relocs, -fpic has to be used to allow shared libs to link libassert as a static library.
