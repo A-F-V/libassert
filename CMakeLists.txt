@@ -109,7 +109,7 @@ if(NOT CMAKE_SKIP_INSTALL_RULES)
   configure_package_config_file(
     cmake/assert-config.cmake.in
     ${CMAKE_CURRENT_BINARY_DIR}/assert/assert-config.cmake
-    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/assert
+    INSTALL_DESTINATION ${CMAKE_INSTALL_DATADIR}/assert
   )
 
   write_basic_package_version_file(
@@ -121,13 +121,13 @@ if(NOT CMAKE_SKIP_INSTALL_RULES)
     EXPORT assert_targets
     FILE assert_targets.cmake
     NAMESPACE assert::
-    DESTINATION cmake
+    DESTINATION ${CMAKE_INSTALL_DATADIR}/assert
   )
 
   install(
     FILES
     ${CMAKE_CURRENT_BINARY_DIR}/assert/assert-config.cmake
     ${CMAKE_CURRENT_BINARY_DIR}/assert/assert-config-version.cmake
-    DESTINATION cmake
+    DESTINATION ${CMAKE_INSTALL_DATADIR}/assert
   )
 endif()
